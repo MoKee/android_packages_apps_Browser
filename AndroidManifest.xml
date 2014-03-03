@@ -36,6 +36,7 @@
     <uses-permission android:name="android.permission.SEND_DOWNLOAD_COMPLETED_INTENTS" />
     <uses-permission android:name="android.permission.SET_WALLPAPER" />
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WRITE_MEDIA_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <uses-permission android:name="android.permission.READ_SYNC_SETTINGS" />
@@ -54,6 +55,9 @@
                    android:hardwareAccelerated="true"
                    android:taskAffinity="android.task.browser"
                    android:supportsRtl="true" >
+
+        <uses-library android:name="com.qrd.useragent"
+                      android:required="false" />
 
         <provider android:name=".provider.BrowserProvider2"
                   android:authorities="com.android.browser;browser"
@@ -196,7 +200,24 @@
             </intent-filter>
         </activity>
 
+        <activity android:name="DownloadSettings" android:label="@string/download_settings_title"
+                  android:theme="@style/DialogWhenLarge"
+                  android:launchMode="singleTask"
+                  android:configChanges="orientation|keyboardHidden|screenSize"
+                  android:windowSoftInputMode="adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.BROWSER_DOWNLOAD" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
         <activity android:name="ComboViewActivity">
+        </activity>
+
+        <!-- For creating new folder in bookmarks page -->
+        <activity android:name="AddBookmarkFolder" android:label="@string/save_bookmark_folder"
+                  android:theme="@style/DialogWhenLarge"
+                  android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
 
         <!-- Bookmark thumbnail homescreen widget -->
@@ -248,6 +269,7 @@
         <provider
             android:name=".homepages.HomeProvider"
             android:authorities="com.android.browser.home"
+            android:grantUriPermissions="true"
             android:readPermission="com.android.browser.permission.READ_HISTORY_BOOKMARKS"
             android:exported="false" />
 
