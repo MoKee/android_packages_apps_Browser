@@ -59,7 +59,7 @@
         <item 
             android:id="@+id/exit_menu_id"
             android:alphabeticShortcut="e"
-            android:title="@string/menu_exit" />
+            android:title="@string/exit_quit" />
         <group
             android:id="@+id/LIVE_MENU">
             <item
