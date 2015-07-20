@@ -40,6 +40,7 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.security.KeyChain;
 import android.security.KeyChainAliasCallback;
+import android.text.format.Formatter;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -69,6 +70,8 @@ import android.webkit.WebView.PictureListener;
 import android.webkit.WebViewClient;
 import android.widget.CheckBox;
 import android.widget.Toast;
+import android.app.Dialog;
+import android.content.DialogInterface.OnClickListener;
 
 import com.android.browser.TabControl.OnThumbnailUpdatedListener;
 import com.android.browser.homepages.HomeProvider;
@@ -1165,11 +1168,28 @@ class Tab implements PictureListener {
         mInForeground = false;
 
         mDownloadListener = new BrowserDownloadListener() {
-            public void onDownloadStart(String url, String userAgent,
-                    String contentDisposition, String mimetype, String referer,
-                    long contentLength) {
-                mWebViewController.onDownloadStart(Tab.this, url, userAgent, contentDisposition,
-                        mimetype, referer, contentLength);
+            public void onDownloadStart(final String url, final String userAgent,
+                    final String contentDisposition, final String mimetype, final String referer,
+                    final long contentLength) {
+                String fileName = URLUtil.guessFileName(url, contentDisposition, mimetype);
+                new AlertDialog.Builder(mContext)
+                        .setTitle(mContext.getResources().getString(R.string.dialog_download_title))
+                        .setMessage(
+                                mContext.getResources().getString(R.string.dialog_download_message,
+                                        fileName, Formatter.formatFileSize(contentLength)))
+                        .setPositiveButton(mContext.getResources().getString(R.string.ok),
+                                new OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (which == DialogInterface.BUTTON_POSITIVE) {
+                                            mWebViewController.onDownloadStart(Tab.this, url,
+                                                    userAgent, contentDisposition,
+                                                    mimetype, referer, contentLength);
+                                        }
+                                    }
+                                })
+                        .setNegativeButton(mContext.getResources().getString(R.string.cancel), null)
+                        .create().show();
             }
         };
         mWebBackForwardListClient = new WebBackForwardListClient() {
@@ -2043,4 +2063,5 @@ class Tab implements PictureListener {
         }
         return sb;
     }
+
 }
