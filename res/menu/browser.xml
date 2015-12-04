@@ -46,6 +46,10 @@
             android:id="@+id/fullscreen_menu_id"
             android:checkable="true"
             android:title="@string/pref_lab_fullscreen" /-->
+        <item
+            android:id="@+id/exit_menu_id"
+            android:title="@string/menu_exit"
+            android:alphabeticShortcut="q" />
         <group
             android:id="@+id/LIVE_MENU">
             <item
