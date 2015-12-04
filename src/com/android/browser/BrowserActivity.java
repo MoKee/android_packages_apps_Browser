@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2006 The Android Open Source Project
+ * Copyright (C) 2013-2016 The MoKee Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,9 +21,12 @@ import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.mokee.utils.MoKeeUtils;
 import android.os.Bundle;
 import android.os.PowerManager;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.ContextMenu;
@@ -34,6 +38,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 
+import com.android.browser.search.SearchEngine;
 import com.android.browser.stub.NullController;
 import com.google.common.annotations.VisibleForTesting;
 
@@ -70,6 +75,15 @@ public class BrowserActivity extends Activity {
             finish();
             return;
         }
+
+        // restore default search engine to google when language isn't cn and hk.
+        if (!MoKeeUtils.isSupportLanguage(true)) {
+            SharedPreferences mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+            String defSearchEngine = mPrefs.getString(PreferenceKeys.PREF_SEARCH_ENGINE, SearchEngine.BAIDU);
+            if (defSearchEngine.equals(SearchEngine.BAIDU))
+                mPrefs.edit().putString(PreferenceKeys.PREF_SEARCH_ENGINE, SearchEngine.GOOGLE).apply();
+        }
+
         mController = createController();
 
         Intent intent = (icicle == null) ? getIntent() : null;
