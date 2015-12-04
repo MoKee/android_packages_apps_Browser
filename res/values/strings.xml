@@ -799,12 +799,14 @@
 
     <!-- Bookmarks -->
     <string-array name="bookmarks" translatable="false">
+        <item>MoKee Android Forums</item>
+        <item>http://bbs.mfunz.com</item>
+        <item>MoKee Market</item>
+        <item>http://apk.mfunz.com</item>
+        <item>Baidu</item>
+        <item>http://m.baidu.com/?from=1677a</item>
         <item>Google</item>
         <item>http://www.google.com</item>
-        <item>CyanogenMod</item>
-        <item>http://www.cyanogenmod.org</item>
-        <item>CyanogenMod Wiki</item>
-        <item>http://wiki.cyanogenmod.org/w/Main_Page</item>
     </string-array>
 
     <!-- The description of the suggestion that lets the user search the web for the query currently
