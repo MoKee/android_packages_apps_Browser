@@ -1,5 +1,6 @@
 /*
  * Copyright (C) 2009 The Android Open Source Project
+ * Copyright (C) 2015-2016 The MoKee Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,13 +19,13 @@ package com.android.browser;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnClickListener;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.CompressFormat;
 import android.graphics.BitmapFactory;
@@ -42,6 +43,8 @@ import android.os.Message;
 import android.os.SystemClock;
 import android.security.KeyChain;
 import android.security.KeyChainAliasCallback;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.format.Formatter;
 import android.text.TextUtils;
 import android.util.Log;
@@ -1171,32 +1174,42 @@ class Tab implements PictureListener {
             public void onDownloadStart(final String url, final String userAgent,
                     final String contentDisposition, final String mimetype, final String referer,
                     final long contentLength) {
-                if (mSettings.downloadConfirmation()) {
-                    String fileName = URLUtil.guessFileName(url, contentDisposition, mimetype);
-                    String fileSize;
-                    if (contentLength <= 0) {
-                        fileSize = "-";
-                    } else {
-                        fileSize = Formatter.formatFileSize(mContext, contentLength);
-                    }
-                    new AlertDialog.Builder(mContext)
-                            .setTitle(mContext.getResources().getString(R.string.dialog_download_title))
-                            .setMessage(mContext.getResources().getString(R.string.dialog_download_message, fileName, fileSize))
-                            .setPositiveButton(mContext.getResources().getString(R.string.ok),
-                                    new OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            if (which == DialogInterface.BUTTON_POSITIVE) {
-                                                mWebViewController.onDownloadStart(Tab.this, url, userAgent, contentDisposition,
-                                                        mimetype, referer, contentLength);
+
+                // Check permissions first when download will be start.
+                int permissionCheck = ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+                if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+                    // Permission already granted, start the download now.
+                    if (mSettings.downloadConfirmation()) {
+                        String fileName = URLUtil.guessFileName(url, contentDisposition, mimetype);
+                        String fileSize;
+                        if (contentLength <= 0) {
+                            fileSize = "-";
+                        } else {
+                            fileSize = Formatter.formatFileSize(mContext, contentLength);
+                        }
+                        new AlertDialog.Builder(mContext)
+                                .setTitle(mContext.getResources().getString(R.string.dialog_download_title))
+                                .setMessage(mContext.getResources().getString(R.string.dialog_download_message, fileName, fileSize))
+                                .setPositiveButton(mContext.getResources().getString(R.string.ok),
+                                        new OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                if (which == DialogInterface.BUTTON_POSITIVE) {
+                                                    mWebViewController.onDownloadStart(Tab.this, url, userAgent, contentDisposition,
+                                                            mimetype, referer, contentLength);
+                                                }
                                             }
-                                        }
-                                    })
-                            .setNegativeButton(mContext.getResources().getString(R.string.cancel), null)
-                            .create().show();
+                                        })
+                                .setNegativeButton(mContext.getResources().getString(R.string.cancel), null)
+                                .create().show();
+                    } else {
+                        mWebViewController.onDownloadStart(Tab.this, url, userAgent, contentDisposition,
+                                mimetype, referer, contentLength);
+                    }
                 } else {
-                    mWebViewController.onDownloadStart(Tab.this, url, userAgent, contentDisposition,
-                            mimetype, referer, contentLength);
+                    // Permission not granted, request it from user
+                    ActivityCompat.requestPermissions(mWebViewController.getActivity(), new String[] {android.Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                            BrowserActivity.PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE);
                 }
             }
         };
@@ -2071,4 +2084,5 @@ class Tab implements PictureListener {
         }
         return sb;
     }
+
 }
