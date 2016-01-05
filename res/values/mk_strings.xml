@@ -25,8 +25,4 @@
     <string name="dialog_download_title">Download</string>
     <string name="dialog_download_message">Do you want to start downloading:\n%1$s\n\nFile size: %2$s</string>
 
-    <!-- Permission check -->
-    <string name="permission_not_granted_dialog_title">Permission not granted</string>
-    <string name="permission_not_granted_dialog_message">The permission to write to external storage was not granted. Cannot download.</string>
-
 </resources>

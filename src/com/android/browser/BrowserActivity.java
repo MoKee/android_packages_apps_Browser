@@ -18,18 +18,15 @@
 package com.android.browser;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.mokee.utils.MoKeeUtils;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.ContextMenu;
@@ -45,7 +42,7 @@ import com.android.browser.search.SearchEngine;
 import com.android.browser.stub.NullController;
 import com.google.common.annotations.VisibleForTesting;
 
-public class BrowserActivity extends Activity implements ActivityCompat.OnRequestPermissionsResultCallback {
+public class BrowserActivity extends Activity {
 
     public static final String ACTION_SHOW_BOOKMARKS = "show_bookmarks";
     public static final String ACTION_SHOW_BROWSER = "show_browser";
@@ -58,8 +55,6 @@ public class BrowserActivity extends Activity implements ActivityCompat.OnReques
     private final static boolean LOGV_ENABLED = Browser.LOGV_ENABLED;
 
     private ActivityController mController = NullController.INSTANCE;
-
-    public static final int PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
 
     @Override
     public void onCreate(Bundle icicle) {
@@ -321,24 +316,6 @@ public class BrowserActivity extends Activity implements ActivityCompat.OnReques
     public boolean dispatchGenericMotionEvent(MotionEvent ev) {
         return mController.dispatchGenericMotionEvent(ev) ||
                 super.dispatchGenericMotionEvent(ev);
-    }
-
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case PERMISSIONS_REQUEST_WRITE_EXTERNAL_STORAGE:
-             // If request is cancelled, the result arrays are empty
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                } else {
-                    new AlertDialog.Builder(this)
-                        .setTitle(R.string.permission_not_granted_dialog_title)
-                        .setMessage(R.string.permission_not_granted_dialog_message)
-                        .setPositiveButton(android.R.string.ok, null)
-                        .show();
-                }
-                break;
-        }
     }
 
 }
