@@ -19,5 +19,7 @@
   <string name="menu_exit">יציאה</string>
   <!-- Download confirmation -->
   <string name="pref_content_download_confirmation">ההורדה אושרה</string>
+  <string name="pref_content_download_confirmation_summary">בקש ממני אישור לפני התחלת הורדות</string>
   <string name="dialog_download_title">הורדה</string>
+  <string name="dialog_download_message">להתחיל להוריד את:\n%1$s\n\nגודל הקובץ: %2$s</string>
 </resources>
