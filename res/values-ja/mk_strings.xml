@@ -20,5 +20,6 @@
   <!-- Download confirmation -->
   <string name="pref_content_download_confirmation">ダウンロードの確認</string>
   <string name="pref_content_download_confirmation_summary">ダウンロードの開始前にプロンプトを表示する</string>
+  <string name="dialog_download_title">ダウンロード</string>
   <string name="dialog_download_message">ダウンロードを開始しますか？:\n%1$s\n\nファイルサイズ:%2$s</string>
 </resources>
