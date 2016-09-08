@@ -16,5 +16,10 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Exit button -->
+  <string name="menu_exit">Lukk</string>
   <!-- Download confirmation -->
+  <string name="pref_content_download_confirmation">Bekreftelse på nedlastet fil</string>
+  <string name="pref_content_download_confirmation_summary">Vis en forespørsel før du starter nedlastinger</string>
+  <string name="dialog_download_title">Last ned</string>
+  <string name="dialog_download_message">Vil du starte nedlasting av: \n%1$s\n\nFilstørrelse: %2$s</string>
 </resources>
