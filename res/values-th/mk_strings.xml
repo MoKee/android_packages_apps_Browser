@@ -16,7 +16,5 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Exit button -->
-  <string name="menu_exit">Exit</string>
   <!-- Download confirmation -->
-  <string name="dialog_download_message">Do you want to start downloading:\n%1$s\n\nFile size: %2$s</string>
 </resources>
