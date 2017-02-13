@@ -16,6 +16,9 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <!-- Exit button -->
+  <string name="menu_exit">Avsluta</string>
   <!-- Download confirmation -->
+  <string name="pref_content_download_confirmation_summary">Visa en fråga innan nedladdningar startas</string>
   <string name="dialog_download_title">Hämta</string>
+  <string name="dialog_download_message">Vill du börja ladda ner:\n%1$s\n\nFilstorlek: %2$s</string>
 </resources>
