@@ -18,8 +18,8 @@
   <!-- Exit button -->
   <string name="menu_exit">Quitter</string>
   <!-- Download confirmation -->
-  <string name="pref_content_download_confirmation">Télécharger Confirmation</string>
-  <string name="pref_content_download_confirmation_summary">Affiche une invite avant de commencer les téléchargements</string>
+  <string name="pref_content_download_confirmation">Confirmation de téléchargement</string>
+  <string name="pref_content_download_confirmation_summary">Afficher un message avant de débuter les téléchargements</string>
   <string name="dialog_download_title">Télécharger</string>
-  <string name="dialog_download_message">Vous voulez commencer à télécharger : \n%1$s\n\nFile taille : %2$s</string>
+  <string name="dialog_download_message">Vous voulez commencer à télécharger : \n%1$s\n\nTaille du fichier: %2$s</string>
 </resources>
