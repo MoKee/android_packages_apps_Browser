@@ -20,6 +20,6 @@
   <!-- Download confirmation -->
   <string name="pref_content_download_confirmation">Потвърждаване на изтегляне</string>
   <string name="pref_content_download_confirmation_summary">Потвърди преди начало на изтегляне</string>
-  <string name="dialog_download_title">Сваляне</string>
-  <string name="dialog_download_message">Искате ли да изтеглите:\n%1$s\n\nFile size: %2$s</string>
+  <string name="dialog_download_title">Изтегляне</string>
+  <string name="dialog_download_message">Искате ли да започнете изтеглянето:\n%1$s\n\nРазмер на файла: %2$s</string>
 </resources>
