@@ -18,4 +18,5 @@
   <!-- Exit button -->
   <string name="menu_exit">ထွက်မည်</string>
   <!-- Download confirmation -->
+  <string name="dialog_download_title">ဒေါင်းလုဒ်</string>
 </resources>
